@@ -21,13 +21,25 @@ class Substition:
         return dictionnaire_frequence
             
     def frequence_lettres(self, message):
+        """creer un dictionnaire d'occurence
+        d'apparition 
+
+        Args:
+            message (str): message à déchiffrer
+
+        Returns:
+            dict: dictionnaire de frequence d'apparition
+        """
         dico_apparition = {}
-        mes = message.split("\n")
+        mes = message.rstrip("\n")
+        mes = mes.rstrip("'")
         mes = mes.split(" ")
         for lettre in mes:
             if lettre not in dico_apparition.keys():
                 dico_apparition[lettre] = 1
             else :
                 dico_apparition[lettre] += 1
-        return dico_apparition
+        return self.passage_pourcentage(dico_apparition, len(mes))
         
+sub = Substition()
+print(sub.frequence_lettres('bonjour je suis ophélie valin hehehe'))
