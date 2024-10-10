@@ -1,24 +1,25 @@
-lettre_double = ["c","f","l","m","n","p","r","s","t"]
-# import fichier 
 
-def dechiffre_mes_1(message) :
-    dico_frequence = frequence_lettres(message)
+from constantes import *
 
+class Substition:
+    def passage_pourcentage(self, dictionnaire_apparation, 
+                            longueur):
+        """a partir d'un dictionnaire d'occurence
+        d'apparition d'une lettre, calcule la frequence
+        d'apparition dans le mot
 
+        Args:
+            dictionnaire_apparation (dict): dico d'occurence
+            longueur (int): longueur du message
 
-# On récupère les lettres du message
-# On note leur fréquence d'apparition
-# On récupère la fréquence indicative des lettres concernées
-# On remplace selon cette fréquence toute les lettres et on print le message obtenue dans le terminal
-# On applique un algo à part qui vérifie si chaque mots obtenus sont français
-
-# Si double lettres : regarder parmis les lettres possibles
-
-
-    
-
-class Substitution :
-
+        Returns:
+            dict: dico de frequence
+        """
+        dictionnaire_frequence = dict()
+        for key,value in dictionnaire_apparation.items():
+            dictionnaire_frequence[key]=value*100/longueur
+        return dictionnaire_frequence
+            
     def frequence_lettres(self, message):
         dico_apparition = {}
         mes = message.split("\n")
