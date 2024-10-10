@@ -5,5 +5,5 @@ Groupe : Nathan Randriantsoa *TD2B*, Clemence Bocquet *TD2B*, Ophelie Valin *TD1
 Réalisation des tâches :
 
 | date | Nathan | Clemence | Ophelie | Yasin |
-|----|----|----|----|
+|----|----|----|----|---|
 | 10/10/2024 - 1h30 |  | | | |
