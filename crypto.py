@@ -2,6 +2,10 @@
 from constantes import *
 
 class Substition:
+
+    def __init__ (self) :
+        self.fichier = open("message1_chiffre.txt", "r")
+
     def passage_pourcentage(self, dictionnaire_apparation, 
                             longueur):
         """a partir d'un dictionnaire d'occurence
@@ -20,14 +24,22 @@ class Substition:
             dictionnaire_frequence[key]=value*100/longueur
         return dictionnaire_frequence
             
-    def frequence_lettres(self, message):
+    def frequence_lettres(self):
         dico_apparition = {}
-        mes = message.split("\n")
-        mes = mes.split(" ")
-        for lettre in mes:
-            if lettre not in dico_apparition.keys():
-                dico_apparition[lettre] = 1
-            else :
-                dico_apparition[lettre] += 1
+        mes = self.fichier.split("\n")
+        for line in mes:
+            for char in line :
+                # Est une lettre de l'alphabet
+                if char.isalpha():
+                    if char not in dico_apparition.keys():
+                        dico_apparition[char] = 1
+                    else :
+                        dico_apparition[char] += 1
         return dico_apparition
         
+    def compare_frequence_lettres(self):
+        
+    
+
+
+
