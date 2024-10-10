@@ -1,9 +1,9 @@
 # SAE_CRYPTO
 
-Groupe : Nathan Randriantsoa *TD2B*, Clemence Bocquet *TD2B*, Ophelie Valin *TD1A*
+Groupe : Nathan Randriantsoa *TD2B*, Clemence Bocquet *TD2B*, Ophelie Valin *TD1A*, Yaskin Keskin *TD2B*
 
 Réalisation des tâches :
 
-| date | Nathan | Clemence | Ophelie |
+| date | Nathan | Clemence | Ophelie | Yasin |
 |----|----|----|----|
-| 10/10/2024 - 1h30 |  | | |
+| 10/10/2024 - 1h30 |  | | | |
