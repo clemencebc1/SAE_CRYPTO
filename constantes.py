@@ -1,5 +1,10 @@
+from string import ascii_lowercase
 
 # tiré de https://fr.wikipedia.org/wiki/Fr%C3%A9quence_d%27apparition_des_lettres
+
+ALPHABET_SIZE = 26
+
+ALPHABET = ascii_lowercase # alphabet minuscules
 
 ALPHABET_FREQ = {'e':0.121,
                  'a':0.0711,
