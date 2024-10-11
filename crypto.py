@@ -1,10 +1,12 @@
+#!/usr/bin/python3
 
 from constantes import *
+from dechiffrement import *
 
 class Substition:
 
-    def __init__ (self) :
-        self.fichier = open("message1_chiffre.txt", "r")
+    def __init__ (self, fichier) :
+        self.fichier = open(fichier, "r").read()
 
     def passage_pourcentage(self, dictionnaire_apparation, 
                             longueur):
@@ -40,7 +42,7 @@ class Substition:
     def compare_frequence_lettres(self):
         return None
     
-    def dechiffrement_cesar(self, message: str, indice: int=1):
+    def dechiffrement_cesar(self, message: str=None, indice: int=1):
         """dechiffre un message
 
         Args:
@@ -51,7 +53,10 @@ class Substition:
         Returns:
             str: le message dechiffre
         """
+        if message is None:
+            message = self.fichier
         mess = message.rstrip("\n").lower()
+        print(mess)
         dechiffrement_cesar = ""
         for carac in mess:
             code = ord(carac)
@@ -59,13 +64,13 @@ class Substition:
             if code > 96:
                 new_carac = chr(code+indice)
             dechiffrement_cesar += new_carac
-        return dechiffrement_cesar
-                
+        print(dechiffrement_cesar)
+        if check_french_message(dechiffrement_cesar) or indice > 25:
+            return dechiffrement_cesar
+        indice += 1
+        return self.dechiffrement_cesar(message, indice)
 
-
-
-        
-    
-
-
-
+    def ascii_caractere(self, carac, indice):
+        code = ord(carac)
+        if code+indice>123:
+            code += (122-code)
