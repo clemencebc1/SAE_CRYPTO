@@ -38,6 +38,32 @@ class Substition:
         return dico_apparition
         
     def compare_frequence_lettres(self):
+        return None
+    
+    def dechiffrement_cesar(self, message: str, indice: int=1):
+        """dechiffre un message
+
+        Args:
+            message (str): le message a dechiffre
+            indice (int, optional): indice de decalage
+            Defaults to 1.
+
+        Returns:
+            str: le message dechiffre
+        """
+        mess = message.rstrip("\n").lower()
+        dechiffrement_cesar = ""
+        for carac in mess:
+            code = ord(carac)
+            new_carac = carac
+            if code > 96:
+                new_carac = chr(code+indice)
+            dechiffrement_cesar += new_carac
+        return dechiffrement_cesar
+                
+
+
+
         
     
 
