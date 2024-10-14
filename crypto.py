@@ -59,10 +59,7 @@ class Substition:
         print(mess)
         dechiffrement_cesar = ""
         for carac in mess:
-            code = ord(carac)
-            new_carac = carac
-            if code > 96:
-                new_carac = chr(code+indice)
+            new_carac = chr(self.ascii_caractere(carac, indice))
             dechiffrement_cesar += new_carac
         print(dechiffrement_cesar)
         if check_french_message(dechiffrement_cesar) or indice > 25:
@@ -73,4 +70,8 @@ class Substition:
     def ascii_caractere(self, carac, indice):
         code = ord(carac)
         if code+indice>123:
-            code += (122-code)
+            indice = code+indice-123
+            code = 96+indice
+        else :
+            code += indice
+        return code
