@@ -1,9 +1,27 @@
 # SAE_CRYPTO
 
-Groupe : Nathan Randriantsoa *TD2B*, Clemence Bocquet *TD2B*, Ophelie Valin *TD1A*, Yaskin Keskin *TD2B*
+## Table des matieres
+- Introduction
+- Messages en clair et chiffrés
+  * Message 1
+  * Message 2
+  * Message 3
+- Methodes de chiffrement utilisees
+  * Message 1
+  * Message 2
+  * Message 3
+- Conclusion
 
-Réalisation des tâches :
+### Introduction
+> Dans le cadre de la SAé 3.04, nos enseignants nous ont demandé de réaliser plusieurs fonctions de déchiffrement de messages cryptés. Par groupe de 4, nous avons donc produit différentes méthodes afin de déchiffrer chacun des messages donnés. 
 
-| date | Nathan | Clemence | Ophelie | Yasin |
-|----|----|----|----|---|
-| 10/10/2024 - 1h30 |  | | | |
+### Messages en clair et chiffrés
+#### Message 1
+#### Message 2
+#### Message 3
+
+### Methodes de chiffrement utilisees
+#### Message 1
+#### Message 2
+#### Message 3
+
