@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
-from constantes import *
-from dechiffrement import *
+import constantes
+
+import dechiffrement
 
 class Substition:
 
@@ -42,34 +43,47 @@ class Substition:
     def compare_frequence_lettres(self):
         return None
     
-    def dechiffrement_cesar(self, message: str=None, indice: int=1):
-        """dechiffre un message
+    def longueur_message(self):
+        """ Calcule la longueur totale du message, c'est à dire le nombre de caractère
+        """
+        longueur = 0
+        for line in self.fichier:
+            longueur += len(line)
+        return longueur
+
+    
+    def decrypt(self, cle : int) -> str:
+        """ Déchiffre le message en utilisant la clé de substitution
 
         Args:
-            message (str): le message a dechiffre
-            indice (int, optional): indice de decalage
-            Defaults to 1.
+            cle (int): le nombre de décalage de l'alphabet
 
         Returns:
-            str: le message dechiffre
+            str: le message déchiffré
         """
-        if message is None:
-            message = self.fichier
-        mess = message.rstrip("\n").lower()
-        dechiffrement_cesar = ""
-        for carac in mess:
-            if carac in ALPHABET:
-                new_carac = self.carac_to_code(carac, indice)
-            dechiffrement_cesar += new_carac
-        if dechiffrement.check_french_message(dechiffrement_cesar) or indice > 25:
-            return dechiffrement_cesar
-        else :
-            indice += 1
-            self.dechiffrement_cesar(message, indice)
-        return message
+        res = ""
+        for line in self.fichier:
+            for char in line :
+                if not char.isalpha(): 
+                    res += char
+                    continue
 
-    def carac_to_code(self, carac, indice):
-        code = ALPHABET.index(carac)
-        if code+indice > 25:
-            code = code+indice-25
-        return ALPHABET[code-1]
+                index = constantes.ALPHABET.index(char.lower()) # index de la lettre dans l'alphabet
+                nv_char = constantes.ALPHABET[(index - cle) % constantes.ALPHABET_SIZE] # nouveau caractère (index - clé modulo 26) 
+
+                res += nv_char
+        return res
+    
+
+    # décryptage temporaire sans l'utilisation des fréquences
+    def decryptage_naif(self):
+        """ Déchiffre un message par substitution jusqu'à trouver un message cohérent (version naive)
+
+        Returns:
+            str: le message déchiffré correct
+        """
+        for cle in range(1, constantes.ALPHABET_SIZE):
+            message = self.decrypt(cle)
+            if dechiffrement.check_french_message(message):
+                return message
+        return self.fichier

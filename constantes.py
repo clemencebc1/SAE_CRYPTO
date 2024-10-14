@@ -1,4 +1,4 @@
-
+from string import ascii_lowercase
 # tiré de https://fr.wikipedia.org/wiki/Fr%C3%A9quence_d%27apparition_des_lettres
 import dechiffrement 
 ALPHABET_FREQ = {'e':0.121,
@@ -45,6 +45,6 @@ ALPHABET_FREQ = {'e':0.121,
                  'í':0.0001
                  }
 
-ALPHABET = ['a','b','c','d','e','f','g','h','i','j','k',
-            'l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+ALPHABET = ascii_lowercase
 DICO = dechiffrement.open_world_list("french")
+ALPHABET_SIZE = 26
