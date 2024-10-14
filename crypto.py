@@ -56,22 +56,20 @@ class Substition:
         if message is None:
             message = self.fichier
         mess = message.rstrip("\n").lower()
-        print(mess)
         dechiffrement_cesar = ""
         for carac in mess:
-            new_carac = chr(self.ascii_caractere(carac, indice))
+            if carac in ALPHABET:
+                new_carac = self.carac_to_code(carac, indice)
             dechiffrement_cesar += new_carac
-        print(dechiffrement_cesar)
-        if check_french_message(dechiffrement_cesar) or indice > 25:
+        if dechiffrement.check_french_message(dechiffrement_cesar) or indice > 25:
             return dechiffrement_cesar
-        indice += 1
-        return self.dechiffrement_cesar(message, indice)
-
-    def ascii_caractere(self, carac, indice):
-        code = ord(carac)
-        if code+indice>123:
-            indice = code+indice-123
-            code = 96+indice
         else :
-            code += indice
-        return code
+            indice += 1
+            self.dechiffrement_cesar(message, indice)
+        return message
+
+    def carac_to_code(self, carac, indice):
+        code = ALPHABET.index(carac)
+        if code+indice > 25:
+            code = code+indice-25
+        return ALPHABET[code-1]

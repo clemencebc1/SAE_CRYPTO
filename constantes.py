@@ -1,6 +1,6 @@
 
 # tiré de https://fr.wikipedia.org/wiki/Fr%C3%A9quence_d%27apparition_des_lettres
-
+import dechiffrement 
 ALPHABET_FREQ = {'e':0.121,
                  'a':0.0711,
                  'i':0.0659,
@@ -44,3 +44,7 @@ ALPHABET_FREQ = {'e':0.121,
                  'ö':0.0001,
                  'í':0.0001
                  }
+
+ALPHABET = ['a','b','c','d','e','f','g','h','i','j','k',
+            'l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+DICO = dechiffrement.open_world_list("french")
