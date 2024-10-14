@@ -82,16 +82,16 @@ class Substition:
         key_index = 0
         
         result = []
-        print(liste_mot)
+        # print(liste_mot)
         for word in liste_mot:
-            print(word)
+            # print(word)
             result_word = ""
             for letter in word:
                 if key_index < len(key):
                     if letter in ALPHA:
                         deciphered_letter_index = (ALPHA.index(letter) - ALPHA.index(key[key_index])) % 26
-                        print(deciphered_letter_index)
-                    # print(ALPHA[deciphered_letter_index])
+                        # print(deciphered_letter_index)
+                        # print(ALPHA[deciphered_letter_index])
                         result_word+=ALPHA[deciphered_letter_index]
                         key_index+=1
                     else:
@@ -100,17 +100,18 @@ class Substition:
                     key_index=0
                     if letter in ALPHA:
                         deciphered_letter_index = (ALPHA.index(letter) - ALPHA.index(key[key_index])) % 26
-                        print(deciphered_letter_index)
+                        # print(deciphered_letter_index)
                         # print(ALPHA[deciphered_letter_index])
                         result_word += ALPHA[deciphered_letter_index]
                         key_index+=1
                     else:
                         result_word += letter
 
-            print(result_word)
+            # print(result_word)
             result.append(result_word)
-                # print(result)
-        print("result:", result)
+        result = ' '.join(result)
+        # print("result:", result)
+        return result
 
 ciphered = "UCVLGH YUU BEQEMF TG ORETORI RIVDXQA QLNO82OP9CK1WU0SCY3SWR74SBDUHNB5JT6O KEORBB"
-Substition.dechriffrement_vernam(ciphered, "CINQ")
+print(Substition.dechriffrement_vernam(ciphered, "CINQ"))
