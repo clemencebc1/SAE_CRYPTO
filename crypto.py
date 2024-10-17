@@ -87,3 +87,63 @@ class Substition:
             if dechiffrement.check_french_message(message):
                 return message
         return self.fichier
+    def ascii_caractere(self, carac, indice):
+        code = ord(carac)
+        if code+indice>123:
+            code += (122-code)
+
+    def dechiffrement_vernam(mot:str, key:str):
+        liste_mot = mot.split(' ')
+        liste_mot = [mot.rstrip('\n') for mot in liste_mot]
+        ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        key_index = 0
+        
+        result = []
+        # print(liste_mot)
+        for word in liste_mot:
+            # print(word)
+            result_word = ""
+            for letter in word:
+                if key_index < len(key):
+                    if letter in ALPHA:
+                        deciphered_letter_index = (ALPHA.index(letter) - ALPHA.index(key[key_index])) % 26
+                        # print(deciphered_letter_index)
+                        # print(ALPHA[deciphered_letter_index])
+                        result_word+=ALPHA[deciphered_letter_index]
+                        key_index+=1
+                    else:
+                        result_word += letter
+                else:
+                    key_index=0
+                    if letter in ALPHA:
+                        deciphered_letter_index = (ALPHA.index(letter) - ALPHA.index(key[key_index])) % 26
+                        # print(deciphered_letter_index)
+                        # print(ALPHA[deciphered_letter_index])
+                        result_word += ALPHA[deciphered_letter_index]
+                        key_index+=1
+                    else:
+                        result_word += letter
+
+            # print(result_word)
+            result.append(result_word)
+        result = ' '.join(result)
+        # print("result:", result)
+        return result
+    
+    def adfgvx(self, message, grille, mot_clef):
+        return None
+    
+    def construction_grille(self, grille, mot_clef):
+        liste_mots = sorted(list(mot_clef.strip()))
+        print(liste_mots)
+
+        dico_grille = dict()
+        indice_mot_clef = 0
+        for i in range(len(grille)):
+            if i%6==0:
+                if i != 0:
+                    indice_mot_clef += 1
+                dico_grille[liste_mots[indice_mot_clef]]=[]
+            dico_grille[liste_mots[indice_mot_clef]].append(grille[i])
+        return dico_grille
+        

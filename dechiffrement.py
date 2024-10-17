@@ -27,4 +27,4 @@ def check_french_message(message:str) -> bool:
 if __name__ == '__main__':
     mot = crypto.Substition("message1_chiffre.txt")
     print(mot.decryptage_naif())
-    
+
