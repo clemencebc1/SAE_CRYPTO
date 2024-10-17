@@ -27,4 +27,11 @@ def check_french_message(message:str) -> bool:
 if __name__ == '__main__':
     mot = crypto.Substition("message1_chiffre.txt")
     print(mot.decryptage_naif())
+    ciphered = "UCVLGH YUU BEQEMF TG ORETORI RIVDXQA QLNO82OP9CK1WU0SCY3SWR74SBDUHNB5JT6O KEORBB"
+    message_2 = crypto.Substition.dechiffrement_vernam(ciphered, "CINQ")
+    print(message_2)
+    message_3 = crypto.Substition("message3_chiffre.txt")
+    grille = message_2.split()[6]
+    mot_clef = message_2.split()[7]
+    print(message_3.construction_grille(grille, "adfgvx"))
 

@@ -133,17 +133,14 @@ class Substition:
     def adfgvx(self, message, grille, mot_clef):
         return None
     
-    def construction_grille(self, grille, mot_clef):
-        liste_mots = sorted(list(mot_clef.strip()))
-        print(liste_mots)
-
+    def construction_grille(self, message, mot_clef):
         dico_grille = dict()
         indice_mot_clef = 0
-        for i in range(len(grille)):
+        for i in range(len(message)):
             if i%6==0:
                 if i != 0:
                     indice_mot_clef += 1
-                dico_grille[liste_mots[indice_mot_clef]]=[]
-            dico_grille[liste_mots[indice_mot_clef]].append(grille[i])
+                dico_grille[mot_clef[indice_mot_clef]]=[]
+            dico_grille[mot_clef[indice_mot_clef]].append(message[i])
         return dico_grille
         
