@@ -135,27 +135,46 @@ class Substition:
     
     def make_ciphering_grid(chars_grid: str):
         KEY = "ADFGVX"
+        if not len(chars_grid) == 36: return "longueur de grille incorect"
         grid = {}
-        for i in range(7,1,1):
-            for k in range(7,1,1):
+        for i in range(1,7,1):
+            for k in range(1,7,1):
                 current_key = KEY[i-1] + KEY[k-1]
                 current_char = chars_grid[(i*k)-1]
                 grid[current_key] = current_char
         return grid
-                
-    def construction_grille(self, grille, mot_clef):
-        liste_mots = sorted(list(mot_clef.strip()))
-        print(liste_mots)
+    
+    def construction_grille_dechiffrement(ciphered_block:list[str], key:str):
+        if not len(key) == 6: return "Clé incorrect"
+        sorted_key = sorted(key)
+        unciphering_grid = {}
+        for i in range(len(key)):
+            letters = []
+            for char in ciphered_block[i]:
+                letters.append(char)
 
-        dico_grille = dict()
-        indice_mot_clef = 0
-        for i in range(len(grille)):
-            if i%6==0:
-                if i != 0:
-                    indice_mot_clef += 1
-                dico_grille[liste_mots[indice_mot_clef]]=[]
-            dico_grille[liste_mots[indice_mot_clef]].append(grille[i])
-        return dico_grille
+        return unciphering_grid
+                
+    # def construction_grille(self, grille, mot_clef):
+    #     liste_mots = sorted(list(mot_clef.strip()))
+    #     print(liste_mots)
+
+    #     dico_grille = dict()
+    #     indice_mot_clef = 0
+    #     for i in range(len(grille)):
+    #         if i%6==0:
+    #             if i != 0:
+    #                 indice_mot_clef += 1
+    #             dico_grille[liste_mots[indice_mot_clef]]=[]
+    #         dico_grille[liste_mots[indice_mot_clef]].append(grille[i])
+    #     return dico_grille
+    
+    def dechiffrement_message_ADFGVX(massage:str, chars_grind:str, public_key:str='CRYPTO'):
+        #TODO fonction dechiffrment ADFGX en utilisant les petites fonction au dessus
+        ...
     
 if __name__ == "__main__":
-    print(True)
+    ciphered = "UCVLGH YUU BEQEMF TG ORETORI RIVDXQA QLNO82OP9CK1WU0SCY3SWR74SBDUHNB5JT6O KEORBB"
+    chars_grid = "AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M"
+    print(Substition.dechiffrement_vernam(ciphered, "CINQ"))
+    print(Substition.make_ciphering_grid(chars_grid))
