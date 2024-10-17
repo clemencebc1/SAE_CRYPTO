@@ -133,6 +133,16 @@ class Substition:
     def adfgvx(self, message, grille, mot_clef):
         return None
     
+    def make_ciphering_grid(chars_grid: str):
+        KEY = "ADFGVX"
+        grid = {}
+        for i in range(7,1,1):
+            for k in range(7,1,1):
+                current_key = KEY[i-1] + KEY[k-1]
+                current_char = chars_grid[(i*k)-1]
+                grid[current_key] = current_char
+        return grid
+                
     def construction_grille(self, grille, mot_clef):
         liste_mots = sorted(list(mot_clef.strip()))
         print(liste_mots)
@@ -146,4 +156,6 @@ class Substition:
                 dico_grille[liste_mots[indice_mot_clef]]=[]
             dico_grille[liste_mots[indice_mot_clef]].append(grille[i])
         return dico_grille
-        
+    
+if __name__ == "__main__":
+    print(True)
