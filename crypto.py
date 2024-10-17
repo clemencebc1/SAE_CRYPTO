@@ -124,100 +124,97 @@ class Substition:
         return result
     
     def dechiffrement_message_ADFGVX(self, bind_grid:str, public_key:str='CRYPTO'):
-        matrix = cree_mat(self.fichier, public_key)
-        uncyphering_grid = construction_grille_dechiffrement(matrix, public_key)
-        cyphering_grid = make_ciphering_grid(chars_grid=bind_grid)
-        antigramme = make_antigramme(uncyphering_grid)
+        matrix = build_matrix_key(self.fichier, public_key)
+        uncyphering_grid = build_uncyphering_grid(matrix, public_key)
+        cyphering_grid = build_cyphering_grid(chars_grid=bind_grid)
+        antigramme = build_antigramme(uncyphering_grid)
         clear_msg = decrypt_antigramme(cyphering_grid,antigramme)
         clear_msg = clear_msg.replace('  ', '\n')
         return clear_msg
     
 #=========================================================ADFGVX=============================================================================================================
-def cree_mat(message_str:str, key: str) -> list[list[str]]:
-    """cree une matrice du message parfaitement divisé en
-    n (longeur de la clé) colonnes, sous forme de liste de liste 
-
+def build_matrix_key(msg:str, key: str) -> list[list[str]]:
+    """cree une matrice du message parfaitement divisé en n (longeur de la clé) colonnes, sous forme de liste de liste 
     Args:
-        message_str (str): message chiffre sous forme de triple-quoted
+        msg (str): message chiffre sous forme de triple-quoted
         strings ou de str simple (sur une ou plusieurs lignes) 
         key (str): la cle de la matrice 
-
     Returns:
         list[list[int]]: la matrice des colonnes
     """
-    mess_ligne = message_str.splitlines()
-    message_coupe = ""
-    premier_ligne = True
-    matrice_final = []
+    lines = msg.splitlines()
+    cut_msg = ""
+    first_line = True
+    matrix = []
     index = 0
-    for ligne in mess_ligne:
+    for ligne in lines:
         if ligne != "":
-            if premier_ligne:
-                message_coupe += ligne
+            if first_line:
+                cut_msg += ligne
             else:
-                message_coupe += " " + ligne
-            premier_ligne = False
+                cut_msg += " " + ligne
+            first_line = False
     for i in range(1, len(key) + 1):
-        vrai_message = int(len(message_coupe) / 6) * i
-        partie_message = message_coupe[index:vrai_message]
-        matrice_final.append(list(partie_message))
-        index = vrai_message
-    return matrice_final
+        msg = int(len(cut_msg) / 6) * i
+        msg_part = cut_msg[index:msg]
+        matrix.append(list(msg_part))
+        index = msg
+    return matrix
 
-def make_ciphering_grid(chars_grid:str = 'AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M'):
+def build_cyphering_grid(chars_grid:str = 'AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M') -> dict[str:list]:
     KEY = "ADFGVX"
     if not len(chars_grid) == 36: return "longueur de grille incorect"
-    grid = {}
+    cyphering_grid = {}
     index=0
     for i in range(1,7,1):
         for k in range(1,7,1):
             current_key = KEY[i-1] + KEY[k-1]
             current_char = chars_grid[index]
-            grid[current_key] = current_char
+            cyphering_grid[current_key] = current_char
             index+=1
-    return grid
+    return cyphering_grid
 
-def make_antigramme(unciphering_grid:dict, key:str = 'CRYPTO'):
+def build_antigramme(uncyphering_grid:dict, key:str = 'CRYPTO') -> list[str]:
     ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    iter = len(unciphering_grid[key[0]])
+    iter = len(uncyphering_grid[key[0]])
     res = []
-    antigramme_tmp = ''
-    antigramme_tmp2 = ''
+    cyphered_antigramme = ''
+    splited_antigramme = ''
     for i in range(iter):
-        for value in unciphering_grid.values():
-            antigramme_tmp += value[i]
-    for i in range(len(antigramme_tmp)):
-        if antigramme_tmp[i] in ALPHA:
-            antigramme_tmp2 += antigramme_tmp[i]
+        for value in uncyphering_grid.values():
+            cyphered_antigramme += value[i]
+    for i in range(len(cyphered_antigramme)):
+        if cyphered_antigramme[i] in ALPHA:
+            splited_antigramme += cyphered_antigramme[i]
         else:
-            res.append(antigramme_tmp[i])
-        if len(antigramme_tmp2) == 2:
-            res.append(antigramme_tmp2)
-            antigramme_tmp2 = ''
+            res.append(cyphered_antigramme[i])
+        if len(splited_antigramme) == 2:
+            res.append(splited_antigramme)
+            splited_antigramme = ''
     return res
 
-def decrypt_antigramme(ciphering_grid:dict, antigramme:list[str]):
+def decrypt_antigramme(ciphering_grid:dict, antigramme:list[str]) -> str:
     res = ""
-    tmp = []
+    antigramme_array = []
     for combinaison in antigramme:
-        exec = True
-        for l in combinaison: 
-            if l not in 'ADFGVX':
-                exec = False
-        if exec:
-            tmp.append(ciphering_grid[combinaison])
+        valid = True
+        for letter in combinaison: 
+            if letter not in 'ADFGVX':
+                valid = False
+        if valid:
+            antigramme_array.append(ciphering_grid[combinaison])
         else:
-            tmp.append(combinaison)
-    res = res.join(tmp)
+            antigramme_array.append(combinaison)
+    res = res.join(antigramme_array)
     return res
 
-def construction_grille_dechiffrement(matrice:list[list[str]], key:str):
+def build_uncyphering_grid(matrice:list[list[str]], key:str):
     if not len(key) == 6: return "Clé incorrect"
-    key = [l for l in key]
-    sorted_key = sorted(key)
-    unciphering_grid = {}
+    keys = [l for l in key]
+    sorted_keys = sorted(keys)
+    uncyphering_grid = {}
     for letter in key:
-        i = sorted_key.index(letter)
+        i = sorted_keys.index(letter)
         value = matrice[i]
-        unciphering_grid[letter] =  value
-    return unciphering_grid
+        uncyphering_grid[letter] = value
+    return uncyphering_grid
