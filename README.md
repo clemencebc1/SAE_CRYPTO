@@ -58,6 +58,15 @@ Nous avions pour intention de déchiffrer en utilisant une logique de fréquence
 
 #### Message 2
 
+Pour le second message, la méthode de chiffrement s’est avérée être celle de Vernam, un chiffrement comparable à un celui de Vigenère à l’exception de quelques conditions pour la clé : 
+- Elle doit être aussi longue que le texte à chiffrer
+- Elle doit être aléatoire
+- Elle ne doit être utilisé qu’une seule fois
+Ce chiffrement est considéré incassable si la clé ne nous est pas fournie.
+
+Afin de déchiffrer le message, nous avons récupéré la clé ‘CINQ’ obtenue dans le message 1 et aligner avec celui à déchiffrer. On applique la substitution inverse pour chacune des lettres et on décale la clé pour chaque mot.
+Le message obtenu après le déchiffrement nous a permis de connaître la méthode de chiffrement utilisée pour le dernier message.
+
 
 
 #### Message 3
