@@ -34,4 +34,5 @@ if __name__ == '__main__':
     grille = message_2.split()[6]
     mot_clef = message_2.split()[7]
     print(message_3.construction_grille(grille, "adfgvx"))
+    print(message_3.groupe_de_deux())
 

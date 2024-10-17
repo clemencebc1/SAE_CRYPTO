@@ -3,6 +3,7 @@
 import constantes
 
 import dechiffrement
+from textwrap import wrap
 
 class Substition:
 
@@ -133,6 +134,14 @@ class Substition:
     def adfgvx(self, message, grille, mot_clef):
         return None
     
+    def groupe_de_deux(self):
+        message = self.fichier.split()
+        liste_carac = []
+        for carac in message:
+            liste_carac += wrap(carac, 2)
+        return liste_carac
+            
+        
     def construction_grille(self, message, mot_clef):
         dico_grille = dict()
         indice_mot_clef = 0
