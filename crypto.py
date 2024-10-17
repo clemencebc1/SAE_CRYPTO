@@ -181,12 +181,21 @@ def make_ciphering_grid(chars_grid:str = 'AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M')
 
 def make_antigramme(unciphering_grid:dict):
     res = []
-    for i in range(len(unciphering_grid.keys())):
+    iter = len(unciphering_grid['C'])
+    print(iter)
+    for i in range(47):
+        tmp_char = ""
         for key,value in unciphering_grid.items():
-            res.append(value[i])
+            tmp_char += value[i]
+        if tmp_char == '':
+            res.append(' ')
+        else:
+            res.append(tmp_char)
     print(res)
     res = "".join(res)
     res = wrap(res, 2)
+    print(res)
+    print(len(res))
     return res
 
 def decrypt_antigramme(ciphering_grid:dict, antigramme:list[str]):
@@ -213,7 +222,6 @@ def construction_grille_dechiffrement(matrice:list[list[str]], key:str):
     unciphering_grid = {}
     for letter in key:
         i = sorted_key.index(letter)
-        # print(f"index: {i}")
         value = matrice[i]
         unciphering_grid[letter] =  value
     return unciphering_grid
@@ -228,8 +236,8 @@ if __name__ == "__main__":
     chars_grid = "AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M"
     test = Substition('message3_chiffre.txt')
     mat = cree_mat(test.fichier, 'CRYPTO')
-    # for each in mat:
-    #     print(each, len(each))
+    for each in mat:
+        print(each, len(each))
     dec_grid = construction_grille_dechiffrement(mat, 'CRYPTO')
     # for key,val in dec_grid.items():
     #     print(key,val)
@@ -243,23 +251,3 @@ if __name__ == "__main__":
     # print(f"GG: {cypher_grid['GG']}")
     # for key,val in cypher_grid.items():
     #     print(key,val)
-    # test_avec_6_mots = ['AFXFFG', 'XADXGF', 'VGDFDV', 'VVVDAF', 'XFVDXX', 'FAGFAG'] # j ai supprimer le - et pris la lettre suivante pour teste
-    # test_avec_6_mots_str = "".join(test_avec_6_mots)
-    # print(mat)
-    # print(Substition.construction_grille_dechiffrement(test_avec_6_mots, "CRYPTO"))
-    # cgd = Substition.construction_grille_dechiffrement(test_avec_6_mots, "CRYPTO")
-    # for key,value in cgd.items():
-    #     print(key,value)
-    # antiG = Substition.make_antigramme(cgd)
-    # print(f"antigrame : {antiG}")
-    # cipher_grid = Substition.make_ciphering_grid()
-    # # for key,value in cipher_grid.items():
-    # #     print(key,value)
-    # clear_msg = Substition.decrypt_antigramme(cipher_grid, antiG)
-    # print(cipher_grid)
-    # print(clear_msg)
-    # print(wrap(test_avec_6_mots_str,2))
-    # print(test.group_de_six())
-    # print(test.group_de_six())
-    # print(Substition.make_ciphering_grid(chars_grid))
-
