@@ -93,23 +93,19 @@ class Substition:
         if code+indice>123:
             code += (122-code)
 
-    def dechiffrement_vernam(mot:str, key:str):
-        liste_mot = mot.split(' ')
+    def dechiffrement_vernam(self, key:str):
+        liste_mot = self.fichier.split(' ')
         liste_mot = [mot.rstrip('\n') for mot in liste_mot]
         ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         key_index = 0
         
         result = []
-        # print(liste_mot)
         for word in liste_mot:
-            # print(word)
             result_word = ""
             for letter in word:
                 if key_index < len(key):
                     if letter in ALPHA:
                         deciphered_letter_index = (ALPHA.index(letter) - ALPHA.index(key[key_index])) % 26
-                        # print(deciphered_letter_index)
-                        # print(ALPHA[deciphered_letter_index])
                         result_word+=ALPHA[deciphered_letter_index]
                         key_index+=1
                     else:
@@ -118,22 +114,26 @@ class Substition:
                     key_index=0
                     if letter in ALPHA:
                         deciphered_letter_index = (ALPHA.index(letter) - ALPHA.index(key[key_index])) % 26
-                        # print(deciphered_letter_index)
-                        # print(ALPHA[deciphered_letter_index])
+
                         result_word += ALPHA[deciphered_letter_index]
                         key_index+=1
                     else:
                         result_word += letter
-
-            # print(result_word)
             result.append(result_word)
         result = ' '.join(result)
-        # print("result:", result)
         return result
     
-
-#==========================================================================================ADFGVX================================================================================================================================================================================
-def cree_mat(message_str: str, key: str) -> list[list[str]]:
+    def dechiffrement_message_ADFGVX(self, bind_grid:str, public_key:str='CRYPTO'):
+        matrix = cree_mat(self.fichier, public_key)
+        uncyphering_grid = construction_grille_dechiffrement(matrix, public_key)
+        cyphering_grid = make_ciphering_grid(chars_grid=bind_grid)
+        antigramme = make_antigramme(uncyphering_grid)
+        clear_msg = decrypt_antigramme(cyphering_grid,antigramme)
+        clear_msg = clear_msg.replace('  ', '\n')
+        return clear_msg
+    
+#=========================================================ADFGVX=============================================================================================================
+def cree_mat(message_str:str, key: str) -> list[list[str]]:
     """cree une matrice du message parfaitement divisé en
     n (longeur de la clé) colonnes, sous forme de liste de liste 
 
@@ -150,7 +150,6 @@ def cree_mat(message_str: str, key: str) -> list[list[str]]:
     premier_ligne = True
     matrice_final = []
     index = 0
-
     for ligne in mess_ligne:
         if ligne != "":
             if premier_ligne:
@@ -158,7 +157,6 @@ def cree_mat(message_str: str, key: str) -> list[list[str]]:
             else:
                 message_coupe += " " + ligne
             premier_ligne = False
-
     for i in range(1, len(key) + 1):
         vrai_message = int(len(message_coupe) / 6) * i
         partie_message = message_coupe[index:vrai_message]
@@ -179,23 +177,23 @@ def make_ciphering_grid(chars_grid:str = 'AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M')
             index+=1
     return grid
 
-def make_antigramme(unciphering_grid:dict):
+def make_antigramme(unciphering_grid:dict, key:str = 'CRYPTO'):
+    ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    iter = len(unciphering_grid[key[0]])
     res = []
-    iter = len(unciphering_grid['C'])
-    print(iter)
-    for i in range(47):
-        tmp_char = ""
-        for key,value in unciphering_grid.items():
-            tmp_char += value[i]
-        if tmp_char == '':
-            res.append(' ')
+    antigramme_tmp = ''
+    antigramme_tmp2 = ''
+    for i in range(iter):
+        for value in unciphering_grid.values():
+            antigramme_tmp += value[i]
+    for i in range(len(antigramme_tmp)):
+        if antigramme_tmp[i] in ALPHA:
+            antigramme_tmp2 += antigramme_tmp[i]
         else:
-            res.append(tmp_char)
-    print(res)
-    res = "".join(res)
-    res = wrap(res, 2)
-    print(res)
-    print(len(res))
+            res.append(antigramme_tmp[i])
+        if len(antigramme_tmp2) == 2:
+            res.append(antigramme_tmp2)
+            antigramme_tmp2 = ''
     return res
 
 def decrypt_antigramme(ciphering_grid:dict, antigramme:list[str]):
@@ -210,10 +208,8 @@ def decrypt_antigramme(ciphering_grid:dict, antigramme:list[str]):
             tmp.append(ciphering_grid[combinaison])
         else:
             tmp.append(combinaison)
-    print(tmp)
     res = res.join(tmp)
     return res
-
 
 def construction_grille_dechiffrement(matrice:list[list[str]], key:str):
     if not len(key) == 6: return "Clé incorrect"
@@ -225,29 +221,3 @@ def construction_grille_dechiffrement(matrice:list[list[str]], key:str):
         value = matrice[i]
         unciphering_grid[letter] =  value
     return unciphering_grid
-            
-    # def dechiffrement_message_ADFGVX(self, chars_grind:str, public_key:str='CRYPTO'):
-    #     message = Substition.group_de_six()
-
-    #     #TODO fonction dechiffrment ADFGX en utilisant les petites fonction au dessus
-    #     ...
-    
-if __name__ == "__main__":
-    chars_grid = "AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M"
-    test = Substition('message3_chiffre.txt')
-    mat = cree_mat(test.fichier, 'CRYPTO')
-    for each in mat:
-        print(each, len(each))
-    dec_grid = construction_grille_dechiffrement(mat, 'CRYPTO')
-    # for key,val in dec_grid.items():
-    #     print(key,val)
-    antigramme = make_antigramme(dec_grid)
-    # antigramme = ['AF', 'GG', 'VX', 'FX', 'VA', 'FX', 'XA', 'AA', 'XA', 'FX', 'GF', 'DD', 'FD', 'XX', 'VF', 'GF', 'DG', 'FD']
-    # print(dec_grid)
-    # print(f"antigramme: {antigramme}")
-    cypher_grid = make_ciphering_grid()
-    clear_msg = decrypt_antigramme(cypher_grid,antigramme)
-    print(f"decrypted: {clear_msg}")
-    # print(f"GG: {cypher_grid['GG']}")
-    # for key,val in cypher_grid.items():
-    #     print(key,val)
