@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from textwrap import wrap
 import constantes
 
 import dechiffrement
@@ -130,71 +131,135 @@ class Substition:
         # print("result:", result)
         return result
     
-    def adfgvx(self, message, grille, mot_clef):
-        return None
-    
-    def make_ciphering_grid(chars_grid: str):
-        KEY = "ADFGVX"
-        if not len(chars_grid) == 36: return "longueur de grille incorect"
-        grid = {}
-        for i in range(1,7,1):
-            for k in range(1,7,1):
-                current_key = KEY[i-1] + KEY[k-1]
-                current_char = chars_grid[(i*k)-1]
-                grid[current_key] = current_char
-        return grid
-    
-    def construction_grille_dechiffrement(ciphered_block:list[str], key:str):
-        if not len(key) == 6: return "Clé incorrect"
-        sorted_key = sorted(key)
-        unciphering_grid = {}
-        for i in range(len(key)):
-            letters = []
-            for char in ciphered_block[i]:
-                letters.append(char)
 
-        return unciphering_grid
-                
-    # def construction_grille(self, grille, mot_clef):
-    #     liste_mots = sorted(list(mot_clef.strip()))
-    #     print(liste_mots)
+#==========================================================================================ADFGVX================================================================================================================================================================================
+def cree_mat(message_str: str, key: str) -> list[list[str]]:
+    """cree une matrice du message parfaitement divisé en
+    n (longeur de la clé) colonnes, sous forme de liste de liste 
 
-    #     dico_grille = dict()
-    #     indice_mot_clef = 0
-    #     for i in range(len(grille)):
-    #         if i%6==0:
-    #             if i != 0:
-    #                 indice_mot_clef += 1
-    #             dico_grille[liste_mots[indice_mot_clef]]=[]
-    #         dico_grille[liste_mots[indice_mot_clef]].append(grille[i])
-    #     return dico_grille
+    Args:
+        message_str (str): message chiffre sous forme de triple-quoted
+        strings ou de str simple (sur une ou plusieurs lignes) 
+        key (str): la cle de la matrice 
 
-    #  def groupe_de_deux(self):
-    #     message = self.fichier.split()
-    #     liste_carac = []
-    #     for carac in message:
-    #         liste_carac += wrap(carac, 2)
-    #     return liste_carac
+    Returns:
+        list[list[int]]: la matrice des colonnes
+    """
+    mess_ligne = message_str.splitlines()
+    message_coupe = ""
+    premier_ligne = True
+    matrice_final = []
+    index = 0
+
+    for ligne in mess_ligne:
+        if ligne != "":
+            if premier_ligne:
+                message_coupe += ligne
+            else:
+                message_coupe += " " + ligne
+            premier_ligne = False
+
+    for i in range(1, len(key) + 1):
+        vrai_message = int(len(message_coupe) / 6) * i
+        partie_message = message_coupe[index:vrai_message]
+        matrice_final.append(list(partie_message))
+        index = vrai_message
+    return matrice_final
+
+def make_ciphering_grid(chars_grid:str = 'AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M'):
+    KEY = "ADFGVX"
+    if not len(chars_grid) == 36: return "longueur de grille incorect"
+    grid = {}
+    index=0
+    for i in range(1,7,1):
+        for k in range(1,7,1):
+            current_key = KEY[i-1] + KEY[k-1]
+            current_char = chars_grid[index]
+            grid[current_key] = current_char
+            index+=1
+    return grid
+
+def make_antigramme(unciphering_grid:dict):
+    res = []
+    for i in range(len(unciphering_grid.keys())):
+        for key,value in unciphering_grid.items():
+            res.append(value[i])
+    print(res)
+    res = "".join(res)
+    res = wrap(res, 2)
+    return res
+
+def decrypt_antigramme(ciphering_grid:dict, antigramme:list[str]):
+    res = ""
+    tmp = []
+    for combinaison in antigramme:
+        exec = True
+        for l in combinaison: 
+            if l not in 'ADFGVX':
+                exec = False
+        if exec:
+            tmp.append(ciphering_grid[combinaison])
+        else:
+            tmp.append(combinaison)
+    print(tmp)
+    res = res.join(tmp)
+    return res
+
+
+def construction_grille_dechiffrement(matrice:list[list[str]], key:str):
+    if not len(key) == 6: return "Clé incorrect"
+    key = [l for l in key]
+    sorted_key = sorted(key)
+    unciphering_grid = {}
+    for letter in key:
+        i = sorted_key.index(letter)
+        # print(f"index: {i}")
+        value = matrice[i]
+        unciphering_grid[letter] =  value
+    return unciphering_grid
             
-        
-    # def construction_grille(self, message, mot_clef):
-    #     dico_grille = dict()
-    #     indice_mot_clef = 0
-    #     for i in range(len(message)):
-    #         if i%6==0:
-    #             if i != 0:
-    #                 indice_mot_clef += 1
-    #             dico_grille[mot_clef[indice_mot_clef]]=[]
-    #         dico_grille[mot_clef[indice_mot_clef]].append(message[i])
-    #     return dico_grille
-        
-    
-    def dechiffrement_message_ADFGVX(massage:str, chars_grind:str, public_key:str='CRYPTO'):
-        #TODO fonction dechiffrment ADFGX en utilisant les petites fonction au dessus
-        ...
+    # def dechiffrement_message_ADFGVX(self, chars_grind:str, public_key:str='CRYPTO'):
+    #     message = Substition.group_de_six()
+
+    #     #TODO fonction dechiffrment ADFGX en utilisant les petites fonction au dessus
+    #     ...
     
 if __name__ == "__main__":
-    ciphered = "UCVLGH YUU BEQEMF TG ORETORI RIVDXQA QLNO82OP9CK1WU0SCY3SWR74SBDUHNB5JT6O KEORBB"
     chars_grid = "AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M"
-    print(Substition.dechiffrement_vernam(ciphered, "CINQ"))
-    print(Substition.make_ciphering_grid(chars_grid))
+    test = Substition('message3_chiffre.txt')
+    mat = cree_mat(test.fichier, 'CRYPTO')
+    # for each in mat:
+    #     print(each, len(each))
+    dec_grid = construction_grille_dechiffrement(mat, 'CRYPTO')
+    # for key,val in dec_grid.items():
+    #     print(key,val)
+    antigramme = make_antigramme(dec_grid)
+    # antigramme = ['AF', 'GG', 'VX', 'FX', 'VA', 'FX', 'XA', 'AA', 'XA', 'FX', 'GF', 'DD', 'FD', 'XX', 'VF', 'GF', 'DG', 'FD']
+    # print(dec_grid)
+    # print(f"antigramme: {antigramme}")
+    cypher_grid = make_ciphering_grid()
+    clear_msg = decrypt_antigramme(cypher_grid,antigramme)
+    print(f"decrypted: {clear_msg}")
+    # print(f"GG: {cypher_grid['GG']}")
+    # for key,val in cypher_grid.items():
+    #     print(key,val)
+    # test_avec_6_mots = ['AFXFFG', 'XADXGF', 'VGDFDV', 'VVVDAF', 'XFVDXX', 'FAGFAG'] # j ai supprimer le - et pris la lettre suivante pour teste
+    # test_avec_6_mots_str = "".join(test_avec_6_mots)
+    # print(mat)
+    # print(Substition.construction_grille_dechiffrement(test_avec_6_mots, "CRYPTO"))
+    # cgd = Substition.construction_grille_dechiffrement(test_avec_6_mots, "CRYPTO")
+    # for key,value in cgd.items():
+    #     print(key,value)
+    # antiG = Substition.make_antigramme(cgd)
+    # print(f"antigrame : {antiG}")
+    # cipher_grid = Substition.make_ciphering_grid()
+    # # for key,value in cipher_grid.items():
+    # #     print(key,value)
+    # clear_msg = Substition.decrypt_antigramme(cipher_grid, antiG)
+    # print(cipher_grid)
+    # print(clear_msg)
+    # print(wrap(test_avec_6_mots_str,2))
+    # print(test.group_de_six())
+    # print(test.group_de_six())
+    # print(Substition.make_ciphering_grid(chars_grid))
+
