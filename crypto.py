@@ -168,6 +168,26 @@ class Substition:
     #             dico_grille[liste_mots[indice_mot_clef]]=[]
     #         dico_grille[liste_mots[indice_mot_clef]].append(grille[i])
     #     return dico_grille
+
+    #  def groupe_de_deux(self):
+    #     message = self.fichier.split()
+    #     liste_carac = []
+    #     for carac in message:
+    #         liste_carac += wrap(carac, 2)
+    #     return liste_carac
+            
+        
+    # def construction_grille(self, message, mot_clef):
+    #     dico_grille = dict()
+    #     indice_mot_clef = 0
+    #     for i in range(len(message)):
+    #         if i%6==0:
+    #             if i != 0:
+    #                 indice_mot_clef += 1
+    #             dico_grille[mot_clef[indice_mot_clef]]=[]
+    #         dico_grille[mot_clef[indice_mot_clef]].append(message[i])
+    #     return dico_grille
+        
     
     def dechiffrement_message_ADFGVX(massage:str, chars_grind:str, public_key:str='CRYPTO'):
         #TODO fonction dechiffrment ADFGX en utilisant les petites fonction au dessus
