@@ -56,5 +56,5 @@ if __name__ == '__main__':
     chars_grid = "AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M"
     public_key = 'CRYPTO'
     test = crypto.Substitution('message3_chiffre.txt')
-    decrypt_msg = test.dechiffrement_message_ADFGVX(chars_grid, public_key)
+    decrypt_msg = test.dechiffrement_ADFGVX(chars_grid, public_key)
     print(decrypt_msg)

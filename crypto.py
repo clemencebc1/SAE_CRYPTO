@@ -144,7 +144,7 @@ class Substitution:
         result = ' '.join(result)
         return result
 
-    def dechiffrement_message_ADFGVX(self, bind_grid: str, public_key: str = 'CRYPTO'):
+    def dechiffrement_ADFGVX(self, bind_grid: str, public_key: str = 'CRYPTO') -> str:
         """Déchiffre un message chiffré avec la méthode ADFGVX.
 
         Args:
@@ -155,9 +155,9 @@ class Substitution:
             str: Le message déchiffré.
         """
         matrix = build_matrix_key(self.fichier, public_key)
-        uncyphering_grid = build_uncyphering_grid(matrix, public_key)
+        decyphering_grid = build_decyphering_grid(matrix, public_key)
         cyphering_grid = build_cyphering_grid(chars_grid=bind_grid)
-        antigramme = build_antigramme(uncyphering_grid)
+        antigramme = build_antigramme(decyphering_grid)
         clear_msg = decrypt_antigramme(cyphering_grid, antigramme)
         clear_msg = clear_msg.replace('  ', '\n')
         return clear_msg
@@ -217,23 +217,23 @@ def build_cyphering_grid(chars_grid: str = 'AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M
     return cyphering_grid
 
 
-def build_antigramme(uncyphering_grid: dict, key: str = 'CRYPTO') -> list[str]:
+def build_antigramme(decyphering_grid: dict, key: str = 'CRYPTO') -> list[str]:
     """Construit l'antigramme utilisé pour déchiffrer le message ADFGVX.
 
     Args:
-        uncyphering_grid (dict): La grille de déchiffrement.
+        decyphering_grid (dict): La grille de déchiffrement.
         key (str, optional): La clé publique. Par défaut 'CRYPTO'.
 
     Returns:
         list[str]: L'antigramme du message.
     """
     ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    iter = len(uncyphering_grid[key[0]])
+    iter = len(decyphering_grid[key[0]])
     res = []
     cyphered_antigramme = ''
     splited_antigramme = ''
     for i in range(iter):
-        for value in uncyphering_grid.values():
+        for value in decyphering_grid.values():
             cyphered_antigramme += value[i]
     for i in range(len(cyphered_antigramme)):
         if cyphered_antigramme[i] in ALPHA:
@@ -271,7 +271,7 @@ def decrypt_antigramme(ciphering_grid: dict, antigramme: list[str]) -> str:
     return res
 
 
-def build_uncyphering_grid(matrice: list[list[str]], key: str):
+def build_decyphering_grid(matrice: list[list[str]], key: str) -> dict[str, list]:
     """Construit la grille de déchiffrement à partir de la matrice et de la clé.
 
     Args:
@@ -285,9 +285,9 @@ def build_uncyphering_grid(matrice: list[list[str]], key: str):
         return "Clé incorrecte"
     keys = [l for l in key]
     sorted_keys = sorted(keys)
-    uncyphering_grid = {}
+    decyphering_grid = {}
     for letter in key:
         i = sorted_keys.index(letter)
         value = matrice[i]
-        uncyphering_grid[letter] = value
-    return uncyphering_grid
+        decyphering_grid[letter] = value
+    return decyphering_grid
