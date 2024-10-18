@@ -1,5 +1,9 @@
 # SAE_CRYPTO
 
+Groupe  
+TD2.1 : VALIN Ophélie  
+TD2.2 : RANDRIANTSOA Nathan,BOCQUET Clémence, KESKIN YASIN
+
 ## Table des matieres
 - Introduction
 - Messages en clair et chiffrés
@@ -64,10 +68,14 @@ Pour le second message, la méthode de chiffrement s’est avérée être celle 
 - Elle ne doit être utilisé qu’une seule fois
 Ce chiffrement est considéré incassable si la clé ne nous est pas fournie.
 
-Afin de déchiffrer le message, nous avons récupéré la clé ‘CINQ’ obtenue dans le message 1 et aligner avec celui à déchiffrer. On applique la substitution inverse pour chacune des lettres et on décale la clé pour chaque mot.
+Afin de déchiffrer le message, nous avons récupéré la clé ‘CINQ’ obtenue dans le message 1 et aligner avec celui à déchiffrer. On applique la substitution inverse pour chacune des lettres.
 Le message obtenu après le déchiffrement nous a permis de connaître la méthode de chiffrement utilisée pour le dernier message.
 
 
 
 #### Message 3
+
+Pour le dernier message, à l'aide du déchiffrement du message 2 nous avons découvert la méthode de chiffrement ADFKVX. Cette méthode consiste à effectuer une substitution des lettres en réalisation une grille de 36 cases. Une fois que nous avons obtenu le message substitué, nous devons réaliser une transposition en mélangeant le mot clé dans l'ordre d'apparition de l'alphabet français. Ainsi le résultat obtenu est le message crypté.
+
+Nous avons récupéré la grille "AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M" et nous avons obtenu le mot "CRYPTO". Tout d'abord, nous avons dû créer une grille de déchiffrement avec le mot clé, pour ensuite découper le message chiffré en groupe de 2 caractères. Nous avons par la suite placé ces groupes dans la grille et inversé la permutation. Ainsi, nous avons obtenu le message chiffré intermédiaire dont il fallait comparer chaque groupement de 2 caractères avec la grille de départ. Après comparaison, 'AF' pouvait correspondre à la lettre 'A' par exemple.
 
