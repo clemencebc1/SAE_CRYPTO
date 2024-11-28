@@ -13,7 +13,7 @@ def open_trace(fichier):
     
 def get_udp(packets):
     for packet in packets:
-        if UDP in packet:
+        if (UDP or TCP) in packet:
             print(packet)
             
 
