@@ -41,10 +41,8 @@ def get_tcp(packets):
             dico_packets_data[i] = bytes(packets[i][TCP].payload)
     return dico_packets_data
     
-
-
-    
-    
+def dechiffrement_cbc():
+    pass
 packets = open_trace("gr_17/trace_1.pcap")
-print(get_udp(packets))
+
 
