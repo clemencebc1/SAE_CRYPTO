@@ -22,3 +22,24 @@ def get_udp(packets):
     
 packets = open_trace("gr_17/trace_1.pcap")
 get_udp(packets)
+
+
+def separation_octets(bits):
+    """ sépare les bits en octets
+
+    Args:
+        bits (str): une chaine contenant des bits
+
+    Returns:
+        str: la chaine avec un espace pour séparer les octets
+    """    
+    max = len(bits)
+    res = ""
+    octet = ""
+    for x in range(0, max):
+        octet += bits[x]
+        if len(octet) == 4 :
+            res += octet
+            res += " "
+            octet = ""
+    return res
