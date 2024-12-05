@@ -112,8 +112,8 @@ def passage_noir_blanc(image_path:str, out_name:str):
 def cacher(i,b):
     return i-(i%2)+b
 
-def trouver(i):
-    return i%5
+def trouver(i, modulo=2):
+    return i%modulo
 
 def cacher_logo_image(image_path:str, out_name:str, logo_path:str):
     original_image = Image.open(image_path)
@@ -132,22 +132,44 @@ def cacher_logo_image(image_path:str, out_name:str, logo_path:str):
 def binary_to_int(bin:str) -> int:
     return int(bin,2)
 
-def trouver_logo(image_path: str, out_name: str, key: list[str]):
-    original_image = Image.open(image_path).convert("RGB")
+def trouver_logo(image_path: str, out_name: str, modulo=2):
+    original_image = Image.open(image_path)
     image_out = Image.new(original_image.mode, original_image.size)
     # parcours des pixels
-    print(original_image.size)
-    i=0
     for x in range(original_image.size[0]):
         for y in range(original_image.size[1]):
             # attribution des pixel, 0,0,0 noir si la valeur de la couleur rouge est impaire 255,255,255 sinon
-            pixel = original_image.getpixel((x, y))
-            # pixel[0] = key[i]
-            pixel2 = (binary_to_int(key[i]), pixel[1], pixel[2])
-            # print('0b'+'key[i]', '0b'+str(pixel[0]), '0b'+str(pixel2[0]))
-            image_out.putpixel((x, y), pixel2)
-            i+=1
+            # print(original_image.getpixel((x,y)))
+            image_out.putpixel((x,y), 128*trouver(original_image.getpixel((x,y)), modulo))
     image_out.save(out_name)
+
+def trouver_cle(original_image_path:str, steg_image_path:str, out_name:str):
+    original_image = Image.open(original_image_path)
+    steg_image = Image.open(steg_image_path)
+    image_out = Image.new(original_image.mode, original_image.size)
+    for x in range(original_image.size[0]):
+        for y in range(original_image.size[1]):
+            original_img_pixel = original_image.getpixel((x,y))
+            print(original_img_pixel, 'original')
+            steg_img_pixel = steg_image.getpixel((x,y))
+            print(steg_img_pixel, 'steg')
+            if original_img_pixel != steg_img_pixel:
+                print('true')
+                image_out.putpixel((x,y), 255)
+            else:
+                # print('false')
+                image_out.putpixel((x,y), 0)
+    image_out.save(out_name)
+
+# def trouver_logo(image_path: str, out_name: str, modulo=2):
+#     original_image = Image.open(image_path).convert("RGB")
+#     image_out = Image.new(original_image.mode, original_image.size)
+#     # parcours des pixels
+#     for x in range(original_image.size[0]):
+#         for y in range(original_image.size[1]):
+#             # attribution des pixel, 0,0,0 noir si la valeur de la couleur rouge est impaire 255,255,255 sinon
+#             image_out.putpixel((x,y), tuple([255*trouver(original_image.getpixel((x,y))[0], modulo)]*3))
+#     image_out.save(out_name)
 
 # def trouver_logo(image_path:str, out_name:str):
 #     original_image = Image.open(image_path)

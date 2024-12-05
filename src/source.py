@@ -9,9 +9,8 @@ def open(file:str = "../gr_17/trace_1.pcap"):
         return e
     
 file  = open()
-file.stats
 # print(file)
-print(file[74].show())
+# print(file[74].show())
 # udpPacket = [pac for pac in file if pac.haslayer(scapy.UDP)]
 # for pac in udpPacket:
 #     print(pac.show())
@@ -88,4 +87,8 @@ print(file[74].show())
 #     return res
 # print(separation_octets(const.FIRST_PAQUET_DATA).split(" "))
 
-# IAPI.trouver_logo("../image/rossignol.bmp", "../image/test.bmp", separation_octets(const.FIRST_PAQUET_DATA).split(" "))
+# for i in range(1,256,1):
+#     print("img stegano",i)
+#     IAPI.trouver_logo(f"../image/stegano_17.bmp", "../test_steg/steg_modulo_"+str(i)+".bmp", i)
+# IAPI.trouver_logo(f"../image/stegano_17.bmp", "../test_steg/steg_modulo_.bmp")
+IAPI.trouver_cle("./image/stegano_17.bmp", "./image/stegano_17.bmp", "./image/cle.bmp")
