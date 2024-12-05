@@ -44,19 +44,22 @@ file  = open()
 #     print(t)
 #     return ''.join(chr(ord(a) ^ ord(b)) for a,b in zip(s,t))
 
-# def xor_strings(s: str, t: str) -> str:
-#     # Assurez-vous que les deux chaînes sont de même longueur
-#     if len(s) != len(t):
-#         raise ValueError("Les chaînes doivent être de même longueur")
+def xor_strings(s: str, t: str) -> str:
+    # Assurez-vous que les deux chaînes sont de même longueur
+    if len(s) != len(t):
+        raise ValueError("Les chaînes doivent être de même longueur")
 
-#     # Effectuer le XOR bit à bit
-#     xor_result = ''.join('1' if a != b else '0' for a, b in zip(s, t))
+    # Effectuer le XOR bit à bit
+    xor_result = ''.join('1' if a != b else '0' for a, b in zip(s, t))
     
-#     return xor_result
-
-# s = "1101"
-# t = "1011"
-# print(xor_strings(s, t))
+    return xor_result
+                   
+def load_image_to_binary_str(path: str) -> str:
+    try:
+        img = open(path, "rb")
+        return ''.join(format(byte, '08b') for byte in img.read())
+    except Exception as e:
+        return str(e)
 
 # print(const.FIRST_PAQUET_DATA)
 # print(const.SECOND_PAQUET_DATA)
@@ -91,4 +94,6 @@ file  = open()
 #     print("img stegano",i)
 #     IAPI.trouver_logo(f"../image/stegano_17.bmp", "../test_steg/steg_modulo_"+str(i)+".bmp", i)
 # IAPI.trouver_logo(f"../image/stegano_17.bmp", "../test_steg/steg_modulo_.bmp")
-IAPI.trouver_cle("./image/stegano_17.bmp", "./image/stegano_17.bmp", "./image/cle.bmp")
+# IAPI.trouver_cle("./image/stegano_17.bmp", "./image/stegano_17.bmp", "./image/cle.bmp")
+t = load_image_to_binary_str("/home/kyotaka/documents/BUT2/SAE/SAE_CRYPTO/key_difference.bmp")
+print(t)
