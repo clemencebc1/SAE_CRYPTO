@@ -46,7 +46,15 @@ def get_tcp(packets):
             dico_packets_data[i] = bytes(packets[i][TCP].payload)
     return dico_packets_data
     
-def dechiffrement_cbc():
+def dechiffrement_cbc(mot_a_chiffrer):
+    # si impair alors bit cle a 1
+    # si pair alors bit cle a 0
+    mot_a_chiffrer = Image.open(mot_a_chiffrer)
+    sortie = mot_a_chiffrer.copy()
+    for i in range(mot_a_chiffrer.size[1]):
+        for j in range(mot_a_chiffrer.size[0]):
+            pixel = mot_a_chiffrer.getpixel((j,i))
+            
     pass
 
 def chiffrement_cbc(mot_a_chiffrer, cle=None):
