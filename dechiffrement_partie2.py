@@ -88,3 +88,4 @@ output_path = "key_difference.bmp"
 
 # Appeler la fonction pour extraire la clé
 extract_key(image1_path, image2_path, output_path)
+print(get_udp(packets))
