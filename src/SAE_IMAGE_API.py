@@ -140,7 +140,7 @@ def trouver_logo(image_path: str, out_name: str, modulo=2):
         for y in range(original_image.size[1]):
             # attribution des pixel, 0,0,0 noir si la valeur de la couleur rouge est impaire 255,255,255 sinon
             # print(original_image.getpixel((x,y)))
-            image_out.putpixel((x,y), 128*trouver(original_image.getpixel((x,y)), modulo))
+            image_out.putpixel((x,y), 255*trouver(original_image.getpixel((x,y)), modulo))
     image_out.save(out_name)
 
 def trouver_cle(original_image_path:str, steg_image_path:str, out_name:str):
