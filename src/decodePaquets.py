@@ -94,12 +94,12 @@ for pac in udpPacket:
 # readable_ascii = "".join(chr(b) if 32 <= b <= 126 else "." for b in decoded_bytes)
 # print("Parties lisibles (ASCII uniquement) :", readable_ascii)
 
-raw_data = r"\\xfcFc\\xb0j*=\t\\xa6\\xd2n%#\x15q\\x83\\x86\\xc7)-(\\xffe7\\x9c79\x0cƀ\\xe8I1{\\xed.(<\\xa2\\x8a^\x15o\x18l\\xb40"
+# raw_data = r"\\xfcFc\\xb0j*=\t\\xa6\\xd2n%#\x15q\\x83\\x86\\xc7)-(\\xffe7\\x9c79\x0cƀ\\xe8I1{\\xed.(<\\xa2\\x8a^\x15o\x18l\\xb40"
 
-# Décoder la chaîne pour interpréter les séquences d'échappement
-decoded_bytes = bytes(raw_data, "utf-8").decode("unicode_escape").encode("latin1")
+# # Décoder la chaîne pour interpréter les séquences d'échappement
+# decoded_bytes = bytes(raw_data, "utf-8").decode("unicode_escape").encode("latin1")
 
-# Convertir les données en binaire (chaîne binaire)
-binary_representation = ''.join(format(byte, '08b') for byte in decoded_bytes)
+# # Convertir les données en binaire (chaîne binaire)
+# binary_representation = ''.join(format(byte, '08b') for byte in decoded_bytes)
 
-print(binary_representation)
+# print(binary_representation)
