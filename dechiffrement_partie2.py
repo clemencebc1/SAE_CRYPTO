@@ -85,10 +85,10 @@ def chiffrement_cbc(mot_a_chiffrer, cle=None):
 
 def premiere_cle():
     binary_data = FIRST_PAQUET_DATA
-    pixels = [int(bit) for bit in binary_data]
-    pixel_matrix = np.array(pixels).reshape(32, 32)
-    image = Image.fromarray((pixel_matrix * 255).astype('uint8'))
-    image.save("vecteur_initialisation.bmp")
+    liste_cles = []
+    for i in range(255, len(FIRST_PAQUET_DATA), 255):
+        liste_cles.append(FIRST_PAQUET_DATA[:i])
+    return liste_cles
 
 def img_to_list(img):
     """converti une image en une liste de valuers
@@ -120,15 +120,6 @@ def extract_key(image1_path, image2_path, output_path):
     key_image.save(output_path)
 
 
-    
-
-vi = "KU4VQMKESDCDM"
-hex_data = "2B12FE529E77C652DC28B1992D0613B36CDB173DE00041DACF67C4E5B463C3E0B2D98E4CFD5F93C7AE3661B163921F318565000789E5451227A699B36A1346107E4518705D4918BFF044631F965600F82503A0B54187F08A9DCB49A331E03DF04A536A500C52868BF0120C630FD95D807E12A8301D755006CC9C9391C79983267D40B842E57B188D18562C054B37F9904B55F997845BBE5B2448"
 packets = open_trace("gr_17/trace_1.pcap")
 
-vi = "11 47 f2 88 50 0b 1d d4 76 05 cd 84 c1 af 4a 27 63 52 ab 9a 3e 27 de 58 68 b9 df c1 d5 a0 44 d9 28 08 3a 2f af c0 4f 3c 27 be 51 fd 64 36 aa c6"
-C2 = "43 11 79 9b 24 e1 09 6f bf b6 68 7a f8 76 49 f5 e0 10 84 7a 10 4c ac 93 dd e2 c7 99 5c 52 43 ff 28 08 3a 2f af c0 4f 3c 27 be 51 fd 64 36 aa c6"
-
-vecteur_initialisation = img_to_list("./img/vecteur_initialisation.png")
-print(chiffrement_cbc("./img/rossignol.bmp", vecteur_initialisation))
-print(get_udp(packets))
+CLES = premiere_cle()
