@@ -6,6 +6,7 @@ TD2.2 : RANDRIANTSOA Nathan,BOCQUET Clémence, KESKIN YASIN
 
 ## Table des matieres
 - Introduction
+- Lancer les programmes
 - Messages en clair et chiffrés
   * Message 1
   * Message 2
@@ -14,12 +15,18 @@ TD2.2 : RANDRIANTSOA Nathan,BOCQUET Clémence, KESKIN YASIN
   * Message 1
   * Message 2
   * Message 3
+- Partie 2 
 - Conclusion
 
 ---
 
 ### Introduction
  Dans le cadre de la SAé 3.04, nos enseignants nous ont demandé de réaliser plusieurs fonctions de déchiffrement de messages cryptés. Par groupe de 4, nous avons donc produit différentes méthodes afin de déchiffrer chacun des messages donnés. 
+
+
+### Lancer les programmes
+  Pour lancer les programmes, notamment la partie 2, vous devez créer un virtualenv (ou installer les librairies nécessaires).  
+  Vous trouverez à la racine du projet **requirements.txt** avec l'ensemble des dépendances.
 
 ### Messages en clair et chiffrés
 #### Message 1
@@ -79,3 +86,5 @@ Pour le dernier message, à l'aide du déchiffrement du message 2 nous avons dé
 
 Nous avons récupéré la grille "AJFB82YN9UX1GS0KPI3QOE74CZVHRLT5WD6M" et nous avons obtenu le mot "CRYPTO". Tout d'abord, nous avons dû créer une grille de déchiffrement avec le mot clé, pour ensuite découper le message chiffré en groupe de 2 caractères. Nous avons par la suite placé ces groupes dans la grille et inversé la permutation. Ainsi, nous avons obtenu le message chiffré intermédiaire dont il fallait comparer chaque groupement de 2 caractères avec la grille de départ. Après comparaison, 'AF' pouvait correspondre à la lettre 'A' par exemple.
 
+### Partie 2
+Pour cette partie, l'ensemble des informations telles que notre analyse, notre raisonnement et nos résultats, se trouvent dans le rapport.
