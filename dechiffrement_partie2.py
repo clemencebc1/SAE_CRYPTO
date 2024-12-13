@@ -48,8 +48,15 @@ def get_tcp(packets):
     return dico_packets_data
     
 def dechiffrement_cbc(mot_a_chiffrer):
-    # si impair alors bit cle a 1
-    # si pair alors bit cle a 0
+    """
+    Déchiffre un message en mode CBC (Cipher Block Chaining).
+
+    Args:
+        mot_a_chiffrer (str): Chemin de l'image à déchiffrer.
+
+    Returns:
+        None: Cette fonction doit encore être implémentée.
+    """
     mot_a_chiffrer = Image.open(mot_a_chiffrer)
     sortie = mot_a_chiffrer.copy()
     for i in range(mot_a_chiffrer.size[1]):
@@ -83,6 +90,12 @@ def chiffrement_cbc(mot_a_chiffrer, cle=None):
     sortie.save("./img/cle.bmp")
 
 def premiere_cle():
+    """
+    Génère une liste de sous-clés basées sur une chaîne binaire prédéfinie.
+
+    Returns:
+        list: Liste contenant des sous-clés binaires.
+    """
     binary_data = FIRST_PAQUET_DATA
     liste_cles = []
     for i in range(255, len(FIRST_PAQUET_DATA), 255):
@@ -104,6 +117,17 @@ def img_to_list(img):
 
 
 def extract_key(image1_path, image2_path, output_path):
+    """
+    Extrait une clé basée sur les différences de pixels entre deux images.
+
+    Args:
+        image1_path (str): Chemin de la première image.
+        image2_path (str): Chemin de la deuxième image.
+        output_path (str): Chemin pour sauvegarder l'image contenant la clé.
+
+    Returns:
+        None: Sauvegarde une image contenant les pixels représentant la clé.
+    """
     image1 = Image.open(image1_path)
     image2 = Image.open(image2_path)
 
@@ -119,11 +143,29 @@ def extract_key(image1_path, image2_path, output_path):
     key_image.save(output_path)
 
 def bitstring_to_bytes(s: str) -> bytes:
-    # Convertit une chaîne de '0' et '1' en octets
+    """
+    Convertit une chaîne binaire ('0' et '1') en un objet bytes.
+
+    Args:
+        s (str): Chaîne binaire à convertir.
+
+    Returns:
+        bytes: Chaîne convertie en objet bytes.
+    """
     return int(s, 2).to_bytes((len(s) + 7) // 8, byteorder='big')
 
 def decrypt_cbc(iv: bytes, key: bytes, ciphertext: bytes) -> bytes:
-    # Vérification de la longueur de l'IV
+    """
+    Déchiffre un message chiffré en mode CBC avec une clé donnée.
+
+    Args:
+        iv (bytes): Vecteur d'initialisation (16 octets).
+        key (bytes): Clé de chiffrement/déchiffrement.
+        ciphertext (bytes): Texte chiffré à déchiffrer.
+
+    Returns:
+        bytes: Texte clair après déchiffrement.
+    """
     if len(iv) != 16:
         raise ValueError("L'IV doit avoir une longueur de 16 octets (128 bits).")
     if len(ciphertext) % 16 != 0:
