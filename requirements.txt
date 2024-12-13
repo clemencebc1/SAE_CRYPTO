@@ -1,0 +1,5 @@
+bitarray==2.8
+scapy==2.6.1
+pillow==11.0.0
+numpy>1.12
+cryptography==44.0.0
